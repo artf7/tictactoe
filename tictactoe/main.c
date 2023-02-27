@@ -28,9 +28,15 @@ void get_grid(){
     printf("3   %c  |  %c  |  %c  \n", grid_rep[2][0],grid_rep[2][1],grid_rep[2][2]);
     printf("  -----+-----+-----\n");
 }
-
+void show_instructions(){
+    get_grid();
+    printf("Welcome to TicTacToe game\n");
+    printf("Instructions:\nTo start play,  first player and second need to enter his initials\n");
+    printf("\nAfter that you will see game board that has 9 cells\nYour goal to fill it to get combination of 3 'x' or 'o'\n");
+    printf("For doing it, you need to enter the row  number (in horizontal way) from 1 to 3 and after, enter column number (in vertical way) from 1 to 3.");
+}
 void show_menu(){
-    printf("\nMenu\n\nPlay [1]\n\nScore History [2]\n\nExit [3]\n\n");
+    printf("\nMenu\n\nPlay [1]\n\nScore History[2]\n\nShow instructions[3]\n\nExit [4]\n\n");
 }
 void determ_x_or_o(){
     if (move_row == 1 && move_col == 1){
@@ -278,7 +284,6 @@ int main()
                 play();
                 break;
             case 2:
-
                 clear();
                 FILE *fp;
                 char ch;
@@ -301,6 +306,17 @@ int main()
                     break;
                 }
             case 3:
+                clear();
+                show_instructions();
+                printf("\n\nClose[1]\n");
+                printf("Enter: ");
+                scanf("%d", &to_exit);
+                if (to_exit == 1){
+                    fclose(fp);
+                    break;
+                }
+                break;
+            case 4:
                 clear();
                 exit(0);
                 break;
