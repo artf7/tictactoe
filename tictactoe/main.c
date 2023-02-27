@@ -34,6 +34,7 @@ void show_instructions(){
     printf("Instructions:\nTo start play,  first player and second need to enter his initials\n");
     printf("\nAfter that you will see game board that has 9 cells\nYour goal to fill it to get combination of 3 'x' or 'o'\n");
     printf("For doing it, you need to enter the row  number (in horizontal way) from 1 to 3 and after, enter column number (in vertical way) from 1 to 3.");
+
 }
 void show_menu(){
     printf("\nMenu\n\nPlay [1]\n\nScore History[2]\n\nShow instructions[3]\n\nExit [4]\n\n");
@@ -268,6 +269,8 @@ clear();
 
 int main()
 {
+    int close_instr;
+    bool x = true;
     int to_exit;
     bool in_program = true;
     int menu;
@@ -284,6 +287,7 @@ int main()
                 play();
                 break;
             case 2:
+                close_instr = 0;
                 clear();
                 FILE *fp;
                 char ch;
@@ -301,19 +305,32 @@ int main()
                 printf("Close[1]\n");
                 printf("Enter: ");
                 scanf("%d", &to_exit);
-                if (to_exit == 1){
-                    fclose(fp);
-                    break;
+                while(x){
+                    printf("\nClose[1]");
+                    printf("\nEnter: ");
+                    scanf("%d", &close_instr);
+                    if (close_instr == 1){
+                        fclose(fp);
+                        clear();
+                        break;
+                    }else{
+                        printf("\nEnter the proper value");
+                    }
                 }
             case 3:
+                x = true;
                 clear();
                 show_instructions();
-                printf("\n\nClose[1]\n");
-                printf("Enter: ");
-                scanf("%d", &to_exit);
-                if (to_exit == 1){
-                    fclose(fp);
-                    break;
+                while(x){
+                    printf("\nClose[1]");
+                    printf("\nEnter: ");
+                    scanf("%d", &close_instr);
+                    if (close_instr == 1){
+                        clear();
+                        break;
+                    }else{
+                        printf("\nEnter the proper value");
+                    }
                 }
                 break;
             case 4:
@@ -326,6 +343,6 @@ int main()
         }
         clear();
     }
-
+    clear();
     return 0;
 }
