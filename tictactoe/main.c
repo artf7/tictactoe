@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
 
 char grid_rep[3][3] = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
 int round = 0;
 int move_row,move_col, inv_move_row,inv_move_col;
 int for_tie;
-int  player2_score = 0;
-int  player1_score = 0;
+int player2_score = 0;
+int player1_score = 0;
 int player_choice = 1;
 char player1_initials[3];
 char player2_initials[3];
 bool in_game = true;
 bool main_game = true;
+
 void clear(){
    system("cls");
 }
@@ -180,20 +180,16 @@ void check_win(){
         }
     }
 }
-void write_to_file() {
-    FILE* fp;
-    fp = fopen("scores.txt", "a");
-    if (fp == NULL) {
-        printf("Failed to open file\n");
-        return;
-    }
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    fprintf(fp, "%d-%02d-%02d \n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-    fprintf("%s: %s", player1_initials, player1_score);
-    fprintf("%s: %s", player2_initials, player2_score);
-    fclose(fp);
+
+void write_to_file(){
+    FILE *fptr;
+    fptr = fopen("score.txt","a");
+    fprintf(fptr,"%s : %d\n",player1_initials, player1_score);
+    fprintf(fptr,"%s : %d\n",player2_initials, player2_score);
+    fprintf(fptr,"\n");
+    fclose(fptr);
 }
+
 void play(){
     int to_menu;
     clear();
@@ -248,24 +244,25 @@ void play(){
                     grid_rep[i][j] = ' ';
                     }
                 }
+            write_to_file();
             for_tie = 0;
             in_game = false;
             main_game = false;
             round = 0;
         }
-        {
+    }
 
-    }
-    }
+
 clear();
-
-
 }
+
+
 
 
 
 int main()
 {
+    int to_exit;
     bool in_program = true;
     int menu;
     while (in_program){
@@ -281,11 +278,11 @@ int main()
                 play();
                 break;
             case 2:
-                int to_exit;
+
                 clear();
                 FILE *fp;
                 char ch;
-                fp = fopen("scores.txt", "r");
+                fp = fopen("score.txt", "r");
                 printf("Score History:\n\n");
                 if (fp == NULL) {
                 printf("No game history in this file.\n");
@@ -300,10 +297,11 @@ int main()
                 printf("Enter: ");
                 scanf("%d", &to_exit);
                 if (to_exit == 1){
+                    fclose(fp);
                     break;
                 }
             case 3:
-
+                clear();
                 exit(0);
                 break;
             default:
